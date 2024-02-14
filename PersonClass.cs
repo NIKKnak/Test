@@ -8,12 +8,18 @@ namespace Test
 {
     public class Person
     {
-        public int age { get; set; }
-        public string name { get; set; }
-        public int number { get; set; }
+        internal int age { get; set; }
+        internal string name { get; set; }
+        internal string role { get; set; }
 
  
-
+        public Person(int Age, string Name, string Role)
+        {
+            age = Age;
+            name = Name;
+            role = Role;
+        
+        }
 
 
     }
