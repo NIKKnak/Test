@@ -21,82 +21,44 @@ internal class Program
 
     static void Main(string[] args)
     {
-        Hero elf = new Hero(new Elf());
-        elf.Run();
-        elf.Hit();
 
+
+        int[] arr = { 2, 5, 8, 12, 16, 23, 38, 56, 72, 91 };
+        int x = 91;
+        int result = BinarySearch(arr, x);
+        if (result == -1)
+            Console.WriteLine("Элемент не найден");
+        else
+            Console.WriteLine("Элемент найден в позиции " + result);
 
     }
 
-    abstract class Weapon()
+
+    // Метод для выполнения бинарного поиска в массиве
+    static int BinarySearch(int[] arr, int x)
     {
-        public abstract void Hit();
-    }
+        int left = 0;
+        int right = arr.Length - 1;
 
-    abstract class Movement()
-    {
-        public abstract void Move();
-    }
-
-
-    class Arbalet : Weapon
-    {
-        public override void Hit()
+        while (left <= right)
         {
-            Console.WriteLine("стреляем из арбалета");
+            int mid = left + (right - left) / 2;
+
+            // Проверяем, если x находится в середине массива
+            if (arr[mid] == x)
+                return mid;
+
+            // Если x больше, чем элемент в середине массива, игнорируем левую часть
+            if (arr[mid] < x)
+                left = mid + 1;
+            // Иначе игнорируем правую часть
+            else
+                right = mid - 1;
         }
+
+        // Если x не найден в массиве
+        return -1;
     }
-
-    class Run : Movement
-    {
-        public override void Move()
-        {
-            Console.WriteLine("бежим");
-        }
-    }
-
-    //-------------
-    abstract class HeroFactory
-    {
-        public abstract Movement CreateMovement();
-        public abstract Weapon CreateWeapon();
-    }
-
-
-    class Elf : HeroFactory
-    {
-        public override Movement CreateMovement()
-        {
-            return new Run();
-        }
-        public override Weapon CreateWeapon()
-        {
-            return new Arbalet();
-        }
-    }
-
-    class Hero
-    {
-        private Weapon _weapon;
-        private Movement _movement;
-
-        public Hero(HeroFactory heroFactory)
-        {
-            _weapon = heroFactory.CreateWeapon();
-            _movement = heroFactory.CreateMovement();
-        }
-        public void Run()
-        {
-            _movement.Move();
-        }
-        public void Hit()
-        {
-            _weapon.Hit();
-        }
-    }
-
-
-
 
 
 
